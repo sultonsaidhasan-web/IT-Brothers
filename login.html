@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirish — IT Brothers</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --bg3: #1a1a24;
+      --card: #16161f;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f0f0ff;
+      --text2: #8888aa;
+      --accent: #6c63ff;
+      --accent3: #00d4aa;
+      --glow: rgba(108, 99, 255, 0.3);
+      --input-bg: #1a1a24;
+      --input-border: rgba(255, 255, 255, 0.1);
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f5f5ff;
+      --bg2: #eeeeff;
+      --bg3: #e8e8f8;
+      --card: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #0a0a1f;
+      --text2: #555577;
+      --accent: #5b52e8;
+      --accent3: #00b894;
+      --glow: rgba(91, 82, 232, 0.15);
+      --input-bg: #ffffff;
+      --input-border: rgba(0, 0, 0, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    .top-bar {
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+    }
+
+    .btn-theme {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+
+    .login-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .login-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px;
+      width: 100%;
+      max-width: 440px;
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+    }
+
+    .login-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      margin: 0 auto 24px;
+    }
+
+    .login-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .login-sub {
+      font-size: 14px;
+      color: var(--text2);
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+      margin-bottom: 8px;
+      letter-spacing: 0.3px;
+    }
+
+    input {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--input-border);
+      color: var(--text);
+      padding: 14px 16px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Space Grotesk', sans-serif;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--glow);
+    }
+
+    input::placeholder {
+      color: var(--text2);
+    }
+
+    .role-select {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .role-btn {
+      padding: 14px;
+      border: 2px solid var(--border);
+      background: var(--bg3);
+      color: var(--text);
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .role-btn.active,
+    .role-btn:hover {
+      border-color: var(--accent);
+      background: rgba(108, 99, 255, 0.1);
+      color: var(--accent);
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), #9b59b6);
+      color: #fff;
+      border: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.3s;
+      margin-top: 8px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px var(--glow);
+    }
+
+    .error-msg {
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.3);
+      color: #ff6b6b;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .login-hints {
+      margin-top: 28px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .login-hints p {
+      font-size: 12px;
+      color: var(--text2);
+      margin-bottom: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: var(--text2);
+      padding: 6px 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .hint code {
+      background: var(--bg2);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--accent3);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="top-bar">
+    <a href="index.html" class="nav-logo">IT Brothers</a>
+    <button class="btn-theme" onclick="toggleTheme()" id="themeBtn">🌙</button>
+  </div>
+
+  <div class="login-wrap">
+    <div class="login-box">
+      <div class="login-icon">🔐</div>
+      <h1 class="login-title">Xush Kelibsiz!</h1>
+      <p class="login-sub">Hisobingizga kiring</p>
+
+      <div class="role-select">
+        <button class="role-btn active" id="role-student" onclick="selectRole('student')">🎓 Talaba</button>
+        <button class="role-btn" id="role-admin" onclick="selectRole('admin')">👑 Admin</button>
+      </div>
+
+      <div id="errorMsg" class="error-msg">❌ Login yoki parol noto'g'ri!</div>
+
+      <div class="form-group">
+        <label>Foydalanuvchi nomi</label>
+        <input type="text" id="username" placeholder="username kiriting..." />
+      </div>
+      <div class="form-group">
+        <label>Parol</label>
+        <input type="password" id="password" placeholder="parol kiriting..." />
+      </div>
+      <button class="btn-submit" onclick="handleLogin()">Kirish →</button>
+
+      <div class="login-hints">
+        <p>🔑 DEMO LOGINLAR:</p>
+        <div class="hint"><span>👑 Admin</span><code>admin / admin123</code></div>
+        <div class="hint"><span>🎓 Hasan</span><code>hasan / hasan123</code></div>
+        <div class="hint"><span>🎓 Javohir</span><code>javohir / javohir123</code></div>
+        <div class="hint"><span>🎓 Husan</span><code>husan / husan123</code></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let selectedRole = 'student';
+    function selectRole(r) {
+      selectedRole = r;
+      document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('role-' + r).classList.add('active');
+    }
+
+    const USERS = {
+      admin: { password: 'admin123', role: 'admin', name: 'Admin' },
+      hasan: { password: 'hasan123', role: 'student', name: 'Hasan' },
+      javohir: { password: 'javohir123', role: 'student', name: 'Javohir' },
+      husan: { password: 'husan123', role: 'student', name: 'Husan' },
+    };
+
+    function handleLogin() {
+      const u = document.getElementById('username').value.trim().toLowerCase();
+      const p = document.getElementById('password').value;
+      const err = document.getElementById('errorMsg');
+      err.style.display = 'none';
+      if (!USERS[u] || USERS[u].password !== p) { err.style.display = 'block'; return; }
+      const user = USERS[u];
+      if (selectedRole !== user.role) { err.textContent = '❌ Bu rol uchun login noto\'g\'ri!'; err.style.display = 'block'; return; }
+      localStorage.setItem('itb_user', JSON.stringify({ username: u, name: user.name, role: user.role }));
+      localStorage.setItem('itb_login_time', new Date().toISOString());
+      // Log visitor
+      const visits = JSON.parse(localStorage.getItem('itb_visits') || '[]');
+      visits.push({ user: u, role: user.role, time: new Date().toISOString() });
+      localStorage.setItem('itb_visits', JSON.stringify(visits));
+      window.location.href = user.role === 'admin' ? 'admin.html' : 'dashboard.html';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').textContent = saved === 'dark' ? '🌙' : '☀️';
+  </script>
+</body>
+
+</html>

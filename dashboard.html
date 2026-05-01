@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="uz" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — IT Brothers</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root[data-theme="dark"] {
+      --bg: #0a0a0f;
+      --bg2: #111118;
+      --bg3: #1a1a24;
+      --card: #16161f;
+      --border: rgba(255, 255, 255, 0.08);
+      --text: #f0f0ff;
+      --text2: #8888aa;
+      --accent: #6c63ff;
+      --accent2: #ff6b6b;
+      --accent3: #00d4aa;
+      --glow: rgba(108, 99, 255, 0.3);
+    }
+
+    :root[data-theme="light"] {
+      --bg: #f5f5ff;
+      --bg2: #eeeeff;
+      --bg3: #e8e8f8;
+      --card: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #0a0a1f;
+      --text2: #555577;
+      --accent: #5b52e8;
+      --accent2: #e85555;
+      --accent3: #00b894;
+      --glow: rgba(91, 82, 232, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Space Grotesk', sans-serif;
+      display: flex;
+      min-height: 100vh;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: var(--bg2);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      z-index: 100;
+    }
+
+    .sidebar-logo {
+      padding: 28px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sidebar-logo span {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: block;
+    }
+
+    .sidebar-logo small {
+      font-size: 11px;
+      color: var(--accent3);
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .sidebar-nav {
+      flex: 1;
+      padding: 20px 12px;
+      overflow-y: auto;
+    }
+
+    .nav-section {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text2);
+      padding: 16px 12px 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-bottom: 4px;
+      color: var(--text2);
+      font-size: 14px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(108, 99, 255, 0.12);
+      color: var(--accent);
+    }
+
+    .sidebar-user {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .user-av {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .user-name {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .user-role {
+      font-size: 11px;
+      color: var(--accent3);
+      font-weight: 600;
+    }
+
+    .btn-logout {
+      width: 100%;
+      background: rgba(255, 107, 107, 0.1);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      color: var(--accent2);
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      transition: all 0.3s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(255, 107, 107, 0.2);
+    }
+
+    .main {
+      margin-left: 260px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      padding: 20px 32px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .topbar h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .btn-theme {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badge-student {
+      background: var(--accent3);
+      color: #000;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .content {
+      padding: 32px;
+      flex: 1;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* WELCOME */
+    .welcome-card {
+      background: linear-gradient(135deg, var(--accent), #9b59b6);
+      border-radius: 20px;
+      padding: 32px;
+      color: #fff;
+      margin-bottom: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .welcome-card h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .welcome-card p {
+      opacity: 0.85;
+      font-size: 15px;
+    }
+
+    .welcome-emoji {
+      font-size: 80px;
+      line-height: 1;
+    }
+
+    /* STATS */
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    .mini-stat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    .mini-stat .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .mini-stat .num {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .mini-stat .lbl {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    /* COURSE PROGRESS */
+    .course-progress-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .course-progress-card h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .cp-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .cp-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .cp-info {
+      flex: 1;
+    }
+
+    .cp-name {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .cp-bar {
+      height: 8px;
+      background: var(--bg3);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .cp-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent3));
+    }
+
+    .cp-pct {
+      font-size: 13px;
+      color: var(--text2);
+      width: 40px;
+      text-align: right;
+    }
+
+    /* LESSONS */
+    .lessons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .lesson-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .lesson-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      box-shadow: 0 16px 40px var(--glow);
+    }
+
+    .lesson-thumb {
+      height: 160px;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      position: relative;
+    }
+
+    .lesson-thumb.html-bg {
+      background: linear-gradient(135deg, rgba(227, 79, 38, 0.8), rgba(240, 101, 41, 0.5));
+    }
+
+    .lesson-thumb.css-bg {
+      background: linear-gradient(135deg, rgba(38, 77, 228, 0.8), rgba(41, 101, 241, 0.5));
+    }
+
+    .lesson-thumb.js-bg {
+      background: linear-gradient(135deg, rgba(247, 223, 30, 0.8), rgba(230, 194, 0, 0.5));
+    }
+
+    .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .lesson-card:hover .play-btn {
+      opacity: 1;
+    }
+
+    .play-icon {
+      width: 56px;
+      height: 56px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .lesson-body {
+      padding: 20px;
+    }
+
+    .lesson-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .lesson-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .lesson-desc {
+      font-size: 13px;
+      color: var(--text2);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .lesson-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 12px;
+      color: var(--text2);
+    }
+
+    .lesson-done {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--accent3);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    /* VIDEO PAGE */
+    .video-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+    }
+
+    @media(max-width:1000px) {
+      .video-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .video-player {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .video-frame {
+      background: #000;
+      aspect-ratio: 16/9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .video-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: linear-gradient(135deg, #1a0a2e, #0a1a2e);
+    }
+
+    .video-placeholder .big-play {
+      width: 72px;
+      height: 72px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .video-placeholder .big-play:hover {
+      transform: scale(1.1);
+    }
+
+    .video-placeholder p {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+    }
+
+    .video-info {
+      padding: 24px;
+    }
+
+    .video-info h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .video-info .meta {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--text2);
+      margin-bottom: 20px;
+    }
+
+    .video-info .desc {
+      font-size: 15px;
+      color: var(--text2);
+      line-height: 1.7;
+    }
+
+    .btn-complete {
+      background: var(--accent3);
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Space Grotesk', sans-serif;
+      margin-top: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.3s;
+    }
+
+    .btn-complete:hover {
+      transform: translateY(-2px);
+    }
+
+    .playlist {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .playlist-header {
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .playlist-header h3 {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .playlist-item {
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .playlist-item:last-child {
+      border-bottom: none;
+    }
+
+    .playlist-item:hover,
+    .playlist-item.playing {
+      background: rgba(108, 99, 255, 0.08);
+    }
+
+    .playlist-item.playing {
+      border-left: 3px solid var(--accent);
+    }
+
+    .pl-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: var(--bg3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .pl-num.done {
+      background: var(--accent3);
+      color: #fff;
+    }
+
+    .pl-num.playing-dot {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .pl-info {
+      flex: 1;
+    }
+
+    .pl-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 3px;
+    }
+
+    .pl-dur {
+      font-size: 11px;
+      color: var(--text2);
+    }
+
+    /* PROFILE */
+    .profile-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 24px;
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .profile-avatar {
+      width: 88px;
+      height: 88px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent3));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 36px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .profile-info h2 {
+      font-family: 'Syne', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+
+    .profile-info p {
+      color: var(--text2);
+      font-size: 14px;
+    }
+
+    .profile-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pbadge {
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pbadge.purple {
+      background: rgba(108, 99, 255, 0.15);
+      color: var(--accent);
+    }
+
+    .pbadge.green {
+      background: rgba(0, 212, 170, 0.15);
+      color: var(--accent3);
+    }
+
+    @media(max-width:768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .main {
+        margin-left: 0;
+      }
+
+      .mini-stats {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span>IT Brothers</span>
+      <small id="sidebar-username">🎓 Talaba</small>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Asosiy</div>
+      <button class="nav-item active" onclick="showPage('home',this)"><span>🏠</span> Bosh Sahifa</button>
+      <button class="nav-item" onclick="showPage('lessons',this)"><span>🎬</span> Darslar</button>
+      <button class="nav-item" onclick="showPage('video',this)"><span>▶️</span> Dars Ko'rish</button>
+      <div class="nav-section">Hisobim</div>
+      <button class="nav-item" onclick="showPage('profile',this)"><span>👤</span> Profil</button>
+      <button class="nav-item" onclick="showPage('certificates',this)"><span>🏆</span> Sertifikatlar</button>
+      <button class="nav-item" onclick="window.location.href='index.html'"><span>🌐</span> Saytga o'tish</button>
+    </nav>
+    <div class="sidebar-user">
+      <div class="user-info">
+        <div class="user-av" id="user-av-letter">?</div>
+        <div>
+          <div class="user-name" id="user-display-name">...</div>
+          <div class="user-role">TALABA</div>
+        </div>
+      </div>
+      <button class="btn-logout" onclick="logout()">🚪 Chiqish</button>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <h1 id="page-title">🏠 Bosh Sahifa</h1>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <button class="btn-theme" onclick="toggleTheme()" id="themeBtn">🌙</button>
+        <span class="badge-student">TALABA</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- HOME -->
+      <div class="page active" id="page-home">
+        <div class="welcome-card">
+          <div>
+            <h2>Salom, <span id="welcome-name">...</span>! 👋</h2>
+            <p>Bugun ham yangi narsa o'rganishga tayyor bo'lsangiz, davom eting!</p>
+            <button onclick="showPage('video',null)"
+              style="margin-top:16px;background:#fff;color:var(--accent);border:none;padding:10px 20px;border-radius:10px;font-weight:700;cursor:pointer;font-size:14px;font-family:'Space Grotesk',sans-serif;">▶️
+              Darsni Davom Ettir</button>
+          </div>
+          <div class="welcome-emoji">🚀</div>
+        </div>
+        <div class="mini-stats">
+          <div class="mini-stat">
+            <div class="icon">📚</div>
+            <div class="num">3</div>
+            <div class="lbl">Kurslar</div>
+          </div>
+          <div class="mini-stat">
+            <div class="icon">✅</div>
+            <div class="num" id="done-count">2</div>
+            <div class="lbl">Tugatilgan darslar</div>
+          </div>
+          <div class="mini-stat">
+            <div class="icon">🏆</div>
+            <div class="num">0</div>
+            <div class="lbl">Sertifikatlar</div>
+          </div>
+        </div>
+        <div class="course-progress-card">
+          <h3>📊 Kurs Progressim</h3>
+          <div class="cp-item">
+            <div class="cp-icon" style="background:linear-gradient(135deg,#e34f26,#f06529);">🌐</div>
+            <div class="cp-info">
+              <div class="cp-name">HTML & CSS Asoslari</div>
+              <div class="cp-bar">
+                <div class="cp-fill" id="html-progress" style="width:25%"></div>
+              </div>
+            </div>
+            <div class="cp-pct" id="html-pct">25%</div>
+          </div>
+          <div class="cp-item">
+            <div class="cp-icon" style="background:linear-gradient(135deg,#f7df1e,#e6c200);">⚡</div>
+            <div class="cp-info">
+              <div class="cp-name">JavaScript Pro</div>
+              <div class="cp-bar">
+                <div class="cp-fill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="cp-pct">0%</div>
+          </div>
+          <div class="cp-item">
+            <div class="cp-icon" style="background:linear-gradient(135deg,#00d4ff,#0099cc);">⚛️</div>
+            <div class="cp-info">
+              <div class="cp-name">React.js</div>
+              <div class="cp-bar">
+                <div class="cp-fill" style="width:0%"></div>
+              </div>
+            </div>
+            <div class="cp-pct">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LESSONS LIST -->
+      <div class="page" id="page-lessons">
+        <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:24px;">🎬 Barcha Darslar
+        </h2>
+        <div style="margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button onclick="filterLessons('all',this)"
+            style="background:var(--accent);color:#fff;border:none;padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;"
+            class="filter-active">Barchasi</button>
+          <button onclick="filterLessons('html',this)"
+            style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;">HTML
+            & CSS</button>
+          <button onclick="filterLessons('js',this)"
+            style="background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:8px 18px;border-radius:100px;font-size:13px;font-weight:600;cursor:pointer;">JavaScript</button>
+        </div>
+        <div class="lessons-grid" id="lessons-container"></div>
+      </div>
+
+      <!-- VIDEO PLAYER -->
+      <div class="page" id="page-video">
+        <div class="video-layout">
+          <div class="video-player">
+            <div class="video-placeholder" id="video-display">
+              <div class="big-play" onclick="playVideo()">▶</div>
+              <p id="now-playing-label">HTML nima? — Kirish darsi</p>
+            </div>
+            <div class="video-info">
+              <h2 id="vid-title">1-Dars: HTML nima? Kirish darsi</h2>
+              <div class="meta">
+                <span>📚 HTML & CSS Asoslari</span>
+                <span>⏱ 15 daqiqa</span>
+                <span id="vid-status">⭕ Ko'rilmagan</span>
+              </div>
+              <p class="desc" id="vid-desc">Ushbu darsda HTML nima ekanligini, u qanday ishlashini va web sahifalar
+                qanday yaratilishini o'rganasiz. HTML — HyperText Markup Language — bu veb sahifalarning skelet
+                tuzilmasi.</p>
+              <button class="btn-complete" id="complete-btn" onclick="markComplete()">✅ Darsni Tugatdim</button>
+            </div>
+          </div>
+          <div class="playlist">
+            <div class="playlist-header">
+              <h3>📚 HTML & CSS Kursi</h3>
+              <p style="font-size:12px;color:var(--text2);margin-top:4px;" id="playlist-progress">0/8 dars tugatildi</p>
+            </div>
+            <div id="playlist-container"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE -->
+      <div class="page" id="page-profile">
+        <div class="profile-card">
+          <div class="profile-avatar" id="profile-av">?</div>
+          <div class="profile-info">
+            <h2 id="profile-name">...</h2>
+            <p>IT Brothers Talabasi</p>
+            <div class="profile-badges">
+              <span class="pbadge purple">🎓 Faol Talaba</span>
+              <span class="pbadge green">✅ HTML & CSS</span>
+            </div>
+          </div>
+        </div>
+        <div class="course-progress-card">
+          <h3>📊 Mening Statistikam</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px;">
+            <div style="background:var(--bg3);border-radius:12px;padding:16px;text-align:center;">
+              <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent);"
+                id="stat-done">0</div>
+              <div style="font-size:12px;color:var(--text2);">Tugatilgan darslar</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:12px;padding:16px;text-align:center;">
+              <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:var(--accent3);">3</div>
+              <div style="font-size:12px;color:var(--text2);">Kurslar</div>
+            </div>
+            <div style="background:var(--bg3);border-radius:12px;padding:16px;text-align:center;">
+              <div style="font-family:'Syne',sans-serif;font-size:28px;font-weight:800;color:#ffd700;">0</div>
+              <div style="font-size:12px;color:var(--text2);">Sertifikatlar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CERTIFICATES -->
+      <div class="page" id="page-certificates">
+        <h2 style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;margin-bottom:24px;">🏆 Sertifikatlarim
+        </h2>
+        <div
+          style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:60px;text-align:center;">
+          <div style="font-size:72px;margin-bottom:16px;">🏆</div>
+          <h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:700;margin-bottom:8px;">Hali sertifikat
+            yo'q</h3>
+          <p style="color:var(--text2);margin-bottom:24px;">Kursni to'liq tugatib sertifikat oling!</p>
+          <button onclick="showPage('video',null)"
+            style="background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:12px;font-weight:700;cursor:pointer;font-size:15px;font-family:'Space Grotesk',sans-serif;">▶️
+            O'qishni Davom Ettir</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem('itb_user') || 'null');
+    if (!user || user.role !== 'student') { window.location.href = 'login.html'; }
+
+    // Init user info
+    if (user) {
+      document.getElementById('welcome-name').textContent = user.name;
+      document.getElementById('user-display-name').textContent = user.name;
+      document.getElementById('user-av-letter').textContent = user.name[0].toUpperCase();
+      document.getElementById('sidebar-username').textContent = '🎓 ' + user.name;
+      document.getElementById('profile-name').textContent = user.name;
+      document.getElementById('profile-av').textContent = user.name[0].toUpperCase();
+    }
+
+    // Lessons data
+    const LESSONS = [
+      { id: 1, num: 'Dars 1', title: 'HTML nima? Kirish darsi', desc: 'HTML nima ekanligini, u qanday ishlashini o\'rganasiz. HyperText Markup Language — veb sahifalarning asosi.', dur: '15 daq', cat: 'html', bg: 'html-bg', emoji: '🌐', course: 'HTML & CSS' },
+      { id: 2, num: 'Dars 2', title: 'HTML teglari va tuzilma', desc: 'HTML ning asosiy teglari, head va body bo\'limlari, to\'g\'ri kod yozish usullari.', dur: '22 daq', cat: 'html', bg: 'html-bg', emoji: '🏗️', course: 'HTML & CSS' },
+      { id: 3, num: 'Dars 3', title: 'Sarlavhalar va Paragraflar', desc: 'h1-h6 sarlavha teglari, p, br, hr teglari va matn formatlash.', dur: '18 daq', cat: 'html', bg: 'html-bg', emoji: '📝', course: 'HTML & CSS' },
+      { id: 4, num: 'Dars 4', title: 'Rasmlar va Havolalar', desc: 'img tegi bilan rasmlar qo\'shish, a tegi bilan havolalar yaratish.', dur: '20 daq', cat: 'html', bg: 'html-bg', emoji: '🖼️', course: 'HTML & CSS' },
+      { id: 5, num: 'Dars 5', title: 'Ro\'yxatlar va Jadvallar', desc: 'ul, ol, li teglari bilan ro\'yxatlar, table bilan jadvallar yaratish.', dur: '25 daq', cat: 'html', bg: 'html-bg', emoji: '📋', course: 'HTML & CSS' },
+      { id: 6, num: 'Dars 6', title: 'CSS Kirish va Selektorlar', desc: 'CSS nima, u qanday ishlaydi. Tag, class va id selektorlari.', dur: '22 daq', cat: 'html', bg: 'css-bg', emoji: '🎨', course: 'HTML & CSS' },
+      { id: 7, num: 'Dars 7', title: 'CSS Box Model', desc: 'margin, padding, border, width, height xususiyatlari. Box model tushunchasi.', dur: '28 daq', cat: 'html', bg: 'css-bg', emoji: '📦', course: 'HTML & CSS' },
+      { id: 8, num: 'Dars 8', title: 'Flexbox Layout', desc: 'display:flex xususiyati bilan zamonaviy layoutlar yaratish.', dur: '30 daq', cat: 'html', bg: 'css-bg', emoji: '🔲', course: 'HTML & CSS' },
+      { id: 9, num: 'Dars 1', title: 'JS — O\'zgaruvchilar', desc: 'var, let, const — o\'zgaruvchilar nima, qachon qaysinisini ishlatish kerak.', dur: '20 daq', cat: 'js', bg: 'js-bg', emoji: '⚡', course: 'JavaScript' },
+      { id: 10, num: 'Dars 2', title: 'JS — Ma\'lumot turlari', desc: 'String, Number, Boolean, Array, Object — JS da ma\'lumot turlari.', dur: '22 daq', cat: 'js', bg: 'js-bg', emoji: '📊', course: 'JavaScript' },
+    ];
+
+    let completedLessons = JSON.parse(localStorage.getItem('itb_completed_' + user?.username) || '[]');
+    let currentLesson = 0;
+
+    function renderLessons(filter = 'all') {
+      const container = document.getElementById('lessons-container');
+      const filtered = filter === 'all' ? LESSONS : LESSONS.filter(l => l.cat === filter);
+      container.innerHTML = filtered.map(l => `
+    <div class="lesson-card" onclick="openLesson(${l.id - 1})">
+      <div class="lesson-thumb ${l.bg}" style="position:relative;">
+        <span>${l.emoji}</span>
+        <div class="play-btn"><div class="play-icon">▶️</div></div>
+        ${completedLessons.includes(l.id) ? '<span class="lesson-done">✓ Tamom</span>' : ''}
+      </div>
+      <div class="lesson-body">
+        <div class="lesson-num">${l.num} • ${l.course}</div>
+        <div class="lesson-title">${l.title}</div>
+        <div class="lesson-desc">${l.desc}</div>
+        <div class="lesson-meta"><span>⏱ ${l.dur}</span><span>${completedLessons.includes(l.id) ? '✅ Ko\'rildi' : '⭕ Ko\'rilmagan'}</span></div>
+      </div>
+    </div>
+  `).join('');
+    }
+
+    function renderPlaylist() {
+      const container = document.getElementById('playlist-container');
+      const htmlLessons = LESSONS.filter(l => l.cat === 'html');
+      container.innerHTML = htmlLessons.map((l, i) => `
+    <div class="playlist-item ${i === currentLesson ? 'playing' : ''}" onclick="openLesson(LESSONS.indexOf(l))">
+      <div class="pl-num ${completedLessons.includes(l.id) ? 'done' : i === currentLesson ? 'playing-dot' : ''}">${completedLessons.includes(l.id) ? '✓' : i + 1}</div>
+      <div class="pl-info">
+        <div class="pl-title">${l.title}</div>
+        <div class="pl-dur">⏱ ${l.dur}</div>
+      </div>
+    </div>
+  `).join('');
+      const done = htmlLessons.filter(l => completedLessons.includes(l.id)).length;
+      document.getElementById('playlist-progress').textContent = `${done}/${htmlLessons.length} dars tugatildi`;
+    }
+
+    function openLesson(idx) {
+      currentLesson = idx;
+      const l = LESSONS[idx];
+      document.getElementById('vid-title').textContent = l.num + ': ' + l.title;
+      document.getElementById('vid-desc').textContent = l.desc;
+      document.getElementById('now-playing-label').textContent = l.title;
+      document.getElementById('vid-status').textContent = completedLessons.includes(l.id) ? '✅ Ko\'rildi' : '⭕ Ko\'rilmagan';
+      document.getElementById('complete-btn').style.background = completedLessons.includes(l.id) ? 'var(--bg3)' : 'var(--accent3)';
+      document.getElementById('complete-btn').textContent = completedLessons.includes(l.id) ? '✅ Tugatildi' : '✅ Darsni Tugatdim';
+      renderPlaylist();
+      showPage('video', null);
+    }
+
+    function markComplete() {
+      const l = LESSONS[currentLesson];
+      if (!completedLessons.includes(l.id)) {
+        completedLessons.push(l.id);
+        localStorage.setItem('itb_completed_' + user.username, JSON.stringify(completedLessons));
+        document.getElementById('vid-status').textContent = '✅ Ko\'rildi';
+        document.getElementById('complete-btn').style.background = 'var(--bg3)';
+        document.getElementById('complete-btn').textContent = '✅ Tugatildi';
+        document.getElementById('done-count').textContent = completedLessons.length;
+        document.getElementById('stat-done').textContent = completedLessons.length;
+        // Update progress
+        const htmlDone = completedLessons.filter(id => LESSONS.find(l => l.id === id && l.cat === 'html')).length;
+        const htmlTotal = LESSONS.filter(l => l.cat === 'html').length;
+        const pct = Math.round(htmlDone / htmlTotal * 100);
+        document.getElementById('html-progress').style.width = pct + '%';
+        document.getElementById('html-pct').textContent = pct + '%';
+        renderPlaylist();
+        renderLessons();
+      }
+    }
+
+    function playVideo() {
+      const disp = document.getElementById('video-display');
+      disp.innerHTML = `
+    <video controls autoplay style="width:100%;height:100%;border-radius:0;">
+      <source src="" type="video/mp4">
+    </video>
+    <div style="position:absolute;inset:0;background:linear-gradient(135deg,#1a0a2e,#0a1a2e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;pointer-events:none;opacity:0.95;">
+      <div style="font-size:64px">🎬</div>
+      <p style="color:rgba(255,255,255,0.8);font-size:16px;font-weight:600;">Video tez orada yuklanadi</p>
+      <p style="color:rgba(255,255,255,0.5);font-size:13px;">Demo versiya — Haqiqiy videoni admin qo'shadi</p>
+    </div>
+  `;
+    }
+
+    function filterLessons(cat, btn) {
+      document.querySelectorAll('.filter-active').forEach(b => { b.classList.remove('filter-active'); b.style.background = 'var(--bg3)'; b.style.color = 'var(--text2)'; b.style.border = '1px solid var(--border)'; });
+      if (btn) { btn.style.background = 'var(--accent)'; btn.style.color = '#fff'; btn.style.border = 'none'; }
+      renderLessons(cat);
+    }
+
+    function showPage(name, el) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.getElementById('page-' + name).classList.add('active');
+      if (el) el.classList.add('active');
+      const titles = { home: '🏠 Bosh Sahifa', lessons: '🎬 Darslar', video: '▶️ Dars Ko\'rish', profile: '👤 Profil', certificates: '🏆 Sertifikatlar' };
+      document.getElementById('page-title').textContent = titles[name] || name;
+      if (name === 'video') renderPlaylist();
+      if (name === 'lessons') renderLessons();
+    }
+
+    function logout() { localStorage.removeItem('itb_user'); window.location.href = 'login.html'; }
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'light' : 'dark');
+    }
+    const saved = localStorage.getItem('theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').textContent = saved === 'dark' ? '🌙' : '☀️';
+
+    // Init
+    document.getElementById('done-count').textContent = completedLessons.length;
+    document.getElementById('stat-done').textContent = completedLessons.length;
+    const htmlDone = completedLessons.filter(id => LESSONS.find(l => l.id === id && l.cat === 'html')).length;
+    const htmlTotal = LESSONS.filter(l => l.cat === 'html').length;
+    if (htmlTotal > 0) {
+      const pct = Math.round(htmlDone / htmlTotal * 100);
+      document.getElementById('html-progress').style.width = pct + '%';
+      document.getElementById('html-pct').textContent = pct + '%';
+    }
+    renderPlaylist();
+  </script>
+</body>
+
+</html>
